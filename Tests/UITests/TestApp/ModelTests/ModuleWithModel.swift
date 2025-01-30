@@ -11,7 +11,7 @@ import SwiftUI
 
 
 struct CustomKey: EnvironmentKey {
-    static let defaultValue = false
+    static var defaultValue = false
 }
 
 @Observable
@@ -24,13 +24,11 @@ class MyModel2 {
 }
 
 
-private struct MyModifier2: ViewModifier {
+private struct MyModifier: ViewModifier {
     @Environment(MyModel2.self)
     var model
     @Environment(ModuleWithModel.self)
     var module
-
-    nonisolated init() {}
 
     func body(content: Content) -> some View {
         content
@@ -40,12 +38,10 @@ private struct MyModifier2: ViewModifier {
 
 
 class ModuleWithModel: Module, EnvironmentAccessible {
-    @Application(\.launchOptions) private var launchOptions
-
     @Model var model = MyModel2(message: "Hello World")
 
     // ensure reordering happens, ViewModifier must be able to access the model from environment
-    @Modifier fileprivate var modifier = MyModifier2()
+    @Modifier fileprivate var modifier = MyModifier()
 
     let message: String = "MODEL"
 }

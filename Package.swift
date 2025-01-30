@@ -1,4 +1,4 @@
-// swift-tools-version:6.0
+// swift-tools-version:5.9
 
 //
 // This source file is part of the Stanford Spezi open-source project
@@ -8,7 +8,6 @@
 // SPDX-License-Identifier: MIT
 //
 
-import class Foundation.ProcessInfo
 import PackageDescription
 
 
@@ -27,26 +26,22 @@ let package = Package(
         .library(name: "XCTSpezi", targets: ["XCTSpezi"])
     ],
     dependencies: [
-        .package(url: "https://github.com/StanfordSpezi/SpeziFoundation.git", from: "2.0.0"),
-        .package(url: "https://github.com/Wall-E-59222/XCTRuntimeAssertions.git", from: "1.1.1"),
-        .package(url: "https://github.com/apple/swift-collections.git", from: "1.1.1")
-    ] + swiftLintPackage(),
+        .package(url: "https://github.com/StanfordSpezi/SpeziFoundation", from: "1.0.2"),
+        .package(url: "https://github.com/Wall-E-59222/XCTRuntimeAssertions", from: "1.1.1")
+    ],
     targets: [
         .target(
             name: "Spezi",
             dependencies: [
                 .product(name: "SpeziFoundation", package: "SpeziFoundation"),
-                .product(name: "XCTRuntimeAssertions", package: "XCTRuntimeAssertions"),
-                .product(name: "OrderedCollections", package: "swift-collections")
-            ],
-            plugins: [] + swiftLintPlugin()
+                .product(name: "XCTRuntimeAssertions", package: "XCTRuntimeAssertions")
+            ]
         ),
         .target(
             name: "XCTSpezi",
             dependencies: [
                 .target(name: "Spezi")
-            ],
-            plugins: [] + swiftLintPlugin()
+            ]
         ),
         .testTarget(
             name: "SpeziTests",
@@ -54,25 +49,7 @@ let package = Package(
                 .target(name: "Spezi"),
                 .target(name: "XCTSpezi"),
                 .product(name: "XCTRuntimeAssertions", package: "XCTRuntimeAssertions")
-            ],
-            plugins: [] + swiftLintPlugin()
+            ]
         )
     ]
 )
-
-func swiftLintPlugin() -> [Target.PluginUsage] {
-    // Fully quit Xcode and open again with `open --env SPEZI_DEVELOPMENT_SWIFTLINT /Applications/Xcode.app`
-    if ProcessInfo.processInfo.environment["SPEZI_DEVELOPMENT_SWIFTLINT"] != nil {
-        [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")]
-    } else {
-        []
-    }
-}
-
-func swiftLintPackage() -> [PackageDescription.Package.Dependency] {
-    if ProcessInfo.processInfo.environment["SPEZI_DEVELOPMENT_SWIFTLINT"] != nil {
-        [.package(url: "https://github.com/realm/SwiftLint.git", from: "0.55.1")]
-    } else {
-        []
-    }
-}

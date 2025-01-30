@@ -11,7 +11,6 @@ import XCTestExtensions
 
 
 final class LifecycleHandlerTests: XCTestCase {
-    @MainActor
     func testLifecycleHandler() throws {
         #if os(macOS) || os(watchOS)
             throw XCTSkip("LifecycleHandler is not supported on macOS or watchOS.")
@@ -20,8 +19,6 @@ final class LifecycleHandlerTests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments = ["--lifecycleTests"]
         app.launch()
-
-        XCTAssertTrue(app.wait(for: .runningForeground, timeout: 2.0))
 
         app.buttons["LifecycleHandler"].tap()
 
@@ -45,11 +42,9 @@ final class LifecycleHandlerTests: XCTestCase {
         app.activate()
         #endif
 
-        XCTAssertTrue(app.wait(for: .runningForeground, timeout: 2.0))
-
         XCTAssert(app.staticTexts["WillFinishLaunchingWithOptions: 1"].waitForExistence(timeout: 2))
-        XCTAssert(app.staticTexts["SceneWillEnterForeground: 2"].waitForExistence(timeout: 2))
-        XCTAssert(app.staticTexts["SceneDidBecomeActive: 2"].waitForExistence(timeout: 2))
+        XCTAssert(app.staticTexts["SceneWillEnterForeground: 2"].exists)
+        XCTAssert(app.staticTexts["SceneDidBecomeActive: 2"].exists)
         XCTAssert(app.staticTexts["SceneWillResignActive: 1"].exists)
         XCTAssert(app.staticTexts["SceneDidEnterBackground: 1"].exists)
         XCTAssert(app.staticTexts["ApplicationWillTerminate: 0"].exists)

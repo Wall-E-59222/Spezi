@@ -17,7 +17,8 @@ private enum DynamicDependenciesTestCase: CaseIterable {
     case twoDependencies
     case duplicatedDependencies
     case noDependencies
-
+    case dependencyCircle
+    
     
     var dynamicDependencies: _DependencyPropertyWrapper<[any Module]> {
         switch self {
@@ -34,17 +35,23 @@ private enum DynamicDependenciesTestCase: CaseIterable {
             }
         case .noDependencies:
             return .init()
+        case .dependencyCircle:
+            return .init {
+                TestModuleCircle1()
+                TestModuleCircle2()
+            }
         }
     }
     
     var expectedNumberOfModules: Int {
         switch self {
-        case .twoDependencies:
+        case .twoDependencies, .duplicatedDependencies:
             return 3
-        case .duplicatedDependencies:
-            return 4
         case .noDependencies:
             return 1
+        case .dependencyCircle:
+            XCTFail("Should never be called!")
+            return -1
         }
     }
     
@@ -63,6 +70,8 @@ private enum DynamicDependenciesTestCase: CaseIterable {
             XCTAssert(testModule2 !== testModule3)
         case .noDependencies:
             XCTAssertEqual(modules.count, 0)
+        case .dependencyCircle:
+            XCTFail("Should never be called!")
         }
     }
 }
@@ -87,19 +96,33 @@ private final class TestModule2: Module {}
 
 private final class TestModule3: Module {}
 
+private final class TestModuleCircle1: Module {
+    @Dependency var testModuleCircle2 = TestModuleCircle2()
+}
+
+private final class TestModuleCircle2: Module {
+    @Dependency var testModuleCircle1 = TestModuleCircle1()
+}
+
 
 final class DynamicDependenciesTests: XCTestCase {
-    @MainActor
     func testDynamicDependencies() throws {
         for dynamicDependenciesTestCase in DynamicDependenciesTestCase.allCases {
             let modules: [any Module] = [
                 TestModule1(dynamicDependenciesTestCase)
             ]
-
-            let initializedModules = DependencyManager.resolveWithoutErrors(modules)
-            XCTAssertEqual(initializedModules.count, dynamicDependenciesTestCase.expectedNumberOfModules)
             
-            try initializedModules.moduleOfType(TestModule1.self).evaluateExpectations()
+            guard dynamicDependenciesTestCase != .dependencyCircle else {
+                try XCTRuntimePrecondition {
+                    _ = DependencyManager.resolve(modules)
+                }
+                return
+            }
+            
+            let sortedModules = DependencyManager.resolve(modules)
+            XCTAssertEqual(sortedModules.count, dynamicDependenciesTestCase.expectedNumberOfModules)
+            
+            try sortedModules.moduleOfType(TestModule1.self).evaluateExpectations()
         }
     }
 }

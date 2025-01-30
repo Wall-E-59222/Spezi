@@ -15,11 +15,8 @@ public class _ModelPropertyWrapper<Model: Observable & AnyObject> {
     // swiftlint:disable:previous type_name
     // We want the type to be hidden from autocompletion and documentation generation
 
-    let id = UUID()
     private var storedValue: Model?
     private var collected = false
-
-    private weak var spezi: Spezi?
 
 
     /// Access the store model.
@@ -46,28 +43,6 @@ public class _ModelPropertyWrapper<Model: Observable & AnyObject> {
     /// - Parameter wrappedValue: The initial value.
     public init(wrappedValue: Model) {
         self.storedValue = wrappedValue
-    }
-
-
-    deinit {
-        // mirrors implementation of clear, however in a compiler proven, concurrency safe way (:
-        collected = false
-        Task { @MainActor [spezi, id] in
-            spezi?.handleViewModifierRemoval(for: id)
-        }
-    }
-}
-
-
-extension _ModelPropertyWrapper: SpeziPropertyWrapper {
-    func clear() {
-        collected = false
-        spezi?.handleViewModifierRemoval(for: id)
-    }
-
-
-    func inject(spezi: Spezi) {
-        self.spezi = spezi
     }
 }
 

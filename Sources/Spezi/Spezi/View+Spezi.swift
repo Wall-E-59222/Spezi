@@ -11,17 +11,16 @@ import SwiftUI
 
 
 struct SpeziViewModifier: ViewModifier {
-    @State private var spezi: Spezi
+    let speziViewModifiers: [any ViewModifier]
     
     
-    init(_ spezi: Spezi) {
-        self.spezi = spezi
+    init(_ anySpezi: Spezi) {
+        self.speziViewModifiers = anySpezi.viewModifiers
     }
     
     
     func body(content: Content) -> some View {
-        spezi.viewModifiers
-            .modify(content)
+        speziViewModifiers.modify(content)
     }
 }
 
@@ -30,7 +29,6 @@ extension View {
     /// Configure Spezi for your application using a delegate.
     /// - Parameter delegate: The ``SpeziAppDelegate`` used in the SwiftUI App instance.
     /// - Returns: The configured view using the Spezi framework.
-    @MainActor
     public func spezi(_ delegate: SpeziAppDelegate) -> some View {
         modifier(SpeziViewModifier(delegate.spezi))
     }
@@ -38,7 +36,6 @@ extension View {
 
 
 extension Array where Element == any ViewModifier {
-    @MainActor
     fileprivate func modify<V: View>(_ view: V) -> AnyView {
         var view = AnyView(view)
         for modifier in self {

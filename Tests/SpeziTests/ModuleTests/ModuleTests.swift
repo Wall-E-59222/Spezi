@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-@_spi(Spezi) @testable import Spezi
+@testable import Spezi
 import SwiftUI
 import XCTest
 import XCTRuntimeAssertions
@@ -31,29 +31,17 @@ private final class DependingTestModule: Module {
 
 
 final class ModuleTests: XCTestCase {
-    @MainActor
     func testModuleFlow() throws {
         let expectation = XCTestExpectation(description: "Module")
         expectation.assertForOverFulfill = true
-
-        _ = Text("Spezi")
-            .spezi(TestApplicationDelegate(expectation: expectation))
-
+        
+        _ = try XCTUnwrap(
+            Text("Spezi")
+                .spezi(TestApplicationDelegate(expectation: expectation)) as? ModifiedContent<Text, SpeziViewModifier>
+        )
         wait(for: [expectation])
     }
 
-    @MainActor
-    func testSpezi() throws {
-        let spezi = Spezi(standard: DefaultStandard(), modules: [DependingTestModule()])
-
-        let modules = spezi.modules
-        XCTAssertEqual(modules.count, 3)
-        XCTAssert(modules.contains(where: { $0 is DefaultStandard }))
-        XCTAssert(modules.contains(where: { $0 is DependingTestModule }))
-        XCTAssert(modules.contains(where: { $0 is TestModule }))
-    }
-
-    @MainActor
     func testPreviewModifier() throws {
         let expectation = XCTestExpectation(description: "Preview Module")
         expectation.assertForOverFulfill = true
@@ -72,7 +60,15 @@ final class ModuleTests: XCTestCase {
         unsetenv(ProcessInfo.xcodeRunningForPreviewKey)
     }
 
-    @MainActor
+    func testPreviewModifierOnlyWithinPreview() throws {
+        try XCTRuntimePrecondition {
+            _ = Text("Spezi")
+                .previewWith {
+                    TestModule()
+                }
+        }
+    }
+
     func testModuleCreation() {
         let expectation = XCTestExpectation(description: "DependingTestModule")
         expectation.assertForOverFulfill = true

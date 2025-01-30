@@ -15,6 +15,7 @@ import XCTSpezi
 class MyModelTestCase: TestAppTestCase {
     let model: MyModel
 
+
     init(model: MyModel) {
         self.model = model
     }
@@ -29,17 +30,9 @@ class MyModelTestCase: TestAppTestCase {
 struct ViewModifierTestView: View {
     @Environment(MyModel.self)
     var model
-    @Environment(MyModifier.ModifierState.self)
-    var state
 
 
     var body: some View {
         TestAppView(testCase: MyModelTestCase(model: model))
-            .onAppear {
-                state.appeared = true
-            }
-            .onDisappear {
-                state.appeared = false
-            }
     }
 }

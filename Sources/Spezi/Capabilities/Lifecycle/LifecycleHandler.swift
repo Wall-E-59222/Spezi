@@ -44,7 +44,6 @@ public protocol LifecycleHandler {
                  to access launchOptions in a platform independent way.
                  """
     )
-    @MainActor
     func willFinishLaunchingWithOptions(_ application: UIApplication, launchOptions: [UIApplication.LaunchOptionsKey: Any])
 
     /// Replicates  the `sceneWillEnterForeground(_: UIScene)` functionality of the `UISceneDelegate`.
@@ -64,7 +63,6 @@ public protocol LifecycleHandler {
                  or other platform-specific mechanisms as a replacement.
                  """
     )
-    @MainActor
     func sceneWillEnterForeground(_ scene: UIScene)
 
     /// Replicates  the `sceneDidBecomeActive(_: UIScene)` functionality of the `UISceneDelegate`.
@@ -80,7 +78,6 @@ public protocol LifecycleHandler {
                   or other platform-specific mechanisms as a replacement.
                   """
     )
-    @MainActor
     func sceneDidBecomeActive(_ scene: UIScene)
 
     /// Replicates  the `sceneWillResignActive(_: UIScene)` functionality of the `UISceneDelegate`.
@@ -96,7 +93,6 @@ public protocol LifecycleHandler {
                   or other platform-specific mechanisms as a replacement.
                   """
     )
-    @MainActor
     func sceneWillResignActive(_ scene: UIScene)
 
     /// Replicates  the `sceneDidEnterBackground(_: UIScene)` functionality of the `UISceneDelegate`.
@@ -112,7 +108,6 @@ public protocol LifecycleHandler {
                   or other platform-specific mechanisms as a replacement.
                   """
     )
-    @MainActor
     func sceneDidEnterBackground(_ scene: UIScene)
 
     /// Replicates  the `applicationWillTerminate(_: UIApplication)` functionality of the `UIApplicationDelegate`.
@@ -128,7 +123,6 @@ public protocol LifecycleHandler {
                  or other platform-specific mechanisms as a replacement.
                  """
     )
-    @MainActor
     func applicationWillTerminate(_ application: UIApplication)
 #endif
 }
@@ -144,22 +138,28 @@ public protocol LifecycleHandler {
 )
 extension LifecycleHandler {
 #if os(iOS) || os(visionOS) || os(tvOS)
-    /// Empty default implementation.
+    // A documentation for this method exists in the `LifecycleHandler` type which SwiftLint doesn't recognize.
+    // swiftlint:disable:next missing_docs
     public func willFinishLaunchingWithOptions(_ application: UIApplication, launchOptions: [UIApplication.LaunchOptionsKey: Any]) {}
 
-    /// Empty default implementation.
+    // A documentation for this method exists in the `LifecycleHandler` type which SwiftLint doesn't recognize.
+    // swiftlint:disable:next missing_docs
     public func sceneWillEnterForeground(_ scene: UIScene) { }
 
-    /// Empty default implementation.
+    // A documentation for this method exists in the `LifecycleHandler` type which SwiftLint doesn't recognize.
+    // swiftlint:disable:next missing_docs
     public func sceneDidBecomeActive(_ scene: UIScene) { }
 
-    /// Empty default implementation.
+    // A documentation for this method exists in the `LifecycleHandler` type which SwiftLint doesn't recognize.
+    // swiftlint:disable:next missing_docs
     public func sceneWillResignActive(_ scene: UIScene) { }
 
-    /// Empty default implementation.
+    // A documentation for this method exists in the `LifecycleHandler` type which SwiftLint doesn't recognize.
+    // swiftlint:disable:next missing_docs
     public func sceneDidEnterBackground(_ scene: UIScene) { }
 
-    /// Empty default implementation.
+    // A documentation for this method exists in the `LifecycleHandler` type which SwiftLint doesn't recognize.
+    // swiftlint:disable:next missing_docs
     public func applicationWillTerminate(_ application: UIApplication) { }
 #endif
 }

@@ -6,7 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-@testable @_spi(Spezi) import Spezi
+@testable import Spezi
 import XCTest
 import XCTRuntimeAssertions
 
@@ -77,8 +77,7 @@ final class ModuleBuilderTests: XCTestCase {
         return modules
     }
     
-
-    @MainActor
+    
     func testModuleBuilderIf() throws {
         let expectations = Expectations(xctestCase: self)
         expectations.loopTestExpectation.expectedFulfillmentCount = 5
@@ -89,15 +88,11 @@ final class ModuleBuilderTests: XCTestCase {
             condition: true,
             expectations: expectations
         )
-
-        for module in DependencyManager.resolveWithoutErrors(modules.elements) {
-            module.configure()
-        }
-
+        
+        _ = Spezi(standard: MockStandard(), modules: modules.elements)
         try expectations.wait()
     }
-
-    @MainActor
+    
     func testModuleBuilderElse() throws {
         let expectations = Expectations(xctestCase: self)
         expectations.conditionalTestExpectation.isInverted = true
@@ -109,11 +104,8 @@ final class ModuleBuilderTests: XCTestCase {
             condition: false,
             expectations: expectations
         )
-
-        for module in DependencyManager.resolveWithoutErrors(modules.elements) {
-            module.configure()
-        }
-
+        
+        _ = Spezi(standard: MockStandard(), modules: modules.elements)
         try expectations.wait()
     }
 }

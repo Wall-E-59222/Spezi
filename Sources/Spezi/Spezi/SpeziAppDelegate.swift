@@ -48,22 +48,11 @@ import SwiftUI
 ///
 /// The ``Module`` documentation provides more information about the structure of modules.
 /// Refer to the ``Configuration`` documentation to learn more about the Spezi configuration.
-@MainActor // need to be made explicit, macOS NSApplicationDelegate has @MainActor individually specified for each method
-open class SpeziAppDelegate: NSObject, ApplicationDelegate, Sendable {
+open class SpeziAppDelegate: NSObject, ApplicationDelegate {
     private(set) static weak var appDelegate: SpeziAppDelegate?
     static var notificationDelegate: SpeziNotificationCenterDelegate? // swiftlint:disable:this weak_delegate
 
-    /// Access the Spezi instance.
-    ///
-    /// Use this property as a basis for creating your own APIs (e.g., providing SwiftUI Environment values that use information from Spezi).
-    /// To not make it directly available to the user.
-    @_spi(APISupport)
-    public static var spezi: Spezi? {
-        SpeziAppDelegate.appDelegate?._spezi
-    }
-
-    private(set) var _spezi: Spezi? // swiftlint:disable:this identifier_name
-
+    private var _spezi: Spezi?
 
     var spezi: Spezi {
         guard let spezi = _spezi else {
@@ -73,8 +62,8 @@ open class SpeziAppDelegate: NSObject, ApplicationDelegate, Sendable {
         }
         return spezi
     }
-
-
+    
+    
     /// Register your different ``Module``s (or more sophisticated ``Module``s) using the ``SpeziAppDelegate/configuration`` property,.
     ///
     /// The ``Standard`` acts as a central message broker in the application.
@@ -101,7 +90,7 @@ open class SpeziAppDelegate: NSObject, ApplicationDelegate, Sendable {
 
 #if os(iOS) || os(visionOS) || os(tvOS)
     @available(*, deprecated, message: "Propagate deprecation warning.")
-    open func application(
+    public func application(
         _ application: UIApplication,
         // The usage of an optional collection is impossible to avoid as the function signature is defined by the `UIApplicationDelegate`
         // swiftlint:disable:next discouraged_optional_collection
@@ -138,7 +127,7 @@ open class SpeziAppDelegate: NSObject, ApplicationDelegate, Sendable {
         setupNotificationDelegate()
     }
 #elseif os(watchOS)
-    open func applicationDidFinishLaunching() {
+    public func applicationDidFinishLaunching() {
         guard !ProcessInfo.processInfo.isPreviewSimulator else {
             return // see note above for why we don't launch this within the preview simulator!
         }
@@ -150,9 +139,9 @@ open class SpeziAppDelegate: NSObject, ApplicationDelegate, Sendable {
 
     // MARK: - Notifications
 
-    open func application(_ application: _Application, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    public func application(_ application: _Application, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         MainActor.assumeIsolated { // on macOS there is a missing MainActor annotation
-            spezi.remoteNotificationRegistrationSupport.handleDeviceTokenUpdate(deviceToken)
+            RegisterRemoteNotificationsAction.handleDeviceTokenUpdate(spezi, deviceToken)
 
             // notify all notification handlers of an updated token
             for handler in spezi.notificationTokenHandler {
@@ -161,9 +150,9 @@ open class SpeziAppDelegate: NSObject, ApplicationDelegate, Sendable {
         }
     }
 
-    open func application(_ application: _Application, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+    public func application(_ application: _Application, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         MainActor.assumeIsolated { // on macOS there is a missing MainActor annotation
-            spezi.remoteNotificationRegistrationSupport.handleFailedRegistration(error)
+            RegisterRemoteNotificationsAction.handleFailedRegistration(spezi, error)
         }
     }
 
@@ -174,19 +163,16 @@ open class SpeziAppDelegate: NSObject, ApplicationDelegate, Sendable {
             return .noData
         }
 
-        let result: Set<BackgroundFetchResult> = await withTaskGroup(of: BackgroundFetchResult.self) { @MainActor group in
+        let result: Set<BackgroundFetchResult> = await withTaskGroup(of: BackgroundFetchResult.self) { group in
             for handler in handlers {
-                group.addTask { @Sendable @MainActor in
+                group.addTask {
                     await handler.receiveRemoteNotification(userInfo)
                 }
             }
 
-            var result: Set<BackgroundFetchResult> = []
-            for await fetchResult in group {
-                // don't ask why, but the `for in` or `reduce(into:_:)` versions trigger Swift 6 concurrency warnings, this one doesn't
-                result.insert(fetchResult)
+            return await group.reduce(into: []) { result, backgroundFetchResult in
+                result.insert(backgroundFetchResult)
             }
-            return result
         }
 
         if result.contains(.failed) {
@@ -200,20 +186,20 @@ open class SpeziAppDelegate: NSObject, ApplicationDelegate, Sendable {
 #endif
 
 #if os(iOS) || os(visionOS) || os(tvOS)
-    open func application(
+    public func application(
         _ application: UIApplication,
         didReceiveRemoteNotification userInfo: [AnyHashable: Any]
     ) async -> UIBackgroundFetchResult {
         await handleReceiveRemoteNotification(userInfo)
     }
 #elseif os(macOS)
-    open func application(_ application: NSApplication, didReceiveRemoteNotification userInfo: [String: Any]) {
+    public func application(_ application: NSApplication, didReceiveRemoteNotification userInfo: [String: Any]) {
         for handler in spezi.notificationHandler {
             handler.receiveRemoteNotification(userInfo)
         }
     }
 #elseif os(watchOS)
-    open func didReceiveRemoteNotification(_ userInfo: [AnyHashable: Any]) async -> WKBackgroundFetchResult {
+    public func didReceiveRemoteNotification(_ userInfo: [AnyHashable: Any]) async -> WKBackgroundFetchResult {
         await handleReceiveRemoteNotification(userInfo)
     }
 #endif

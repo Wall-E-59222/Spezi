@@ -31,7 +31,7 @@ To access application properties or actions you can use the ``Module/Application
 - ``Spezi/logger``
 - ``Spezi/launchOptions``
 
-### Notifications
+### Actions
 
 - ``Spezi/registerRemoteNotifications``
 - ``Spezi/unregisterRemoteNotifications``

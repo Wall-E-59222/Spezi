@@ -34,12 +34,9 @@ class ExampleModule: Module {
     @Application(\.registerRemoteNotifications)
     var registerRemoteNotifications
 
-    func handleNotificationsPermissions() async throws {
-        // Make sure to request notifications permissions before registering for remote notifications
-        try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound])
+    func handleNotificationsAllowed() async throws {
         let deviceToken = try await registerRemoteNotifications()
-
-        // ... send the device token to your remote server that generates push notifications
+        // .. send the device token to your remote server that generates push notifications
     }
 }
 ```
@@ -60,10 +57,9 @@ implement the ``NotificationHandler/receiveRemoteNotification(_:)`` method.
 ### Notifications
 
 - ``NotificationHandler``
-
-### Apple Push Notification Service
-
 - ``NotificationTokenHandler``
+
+### Remote Notification Registration
+
 - ``Spezi/registerRemoteNotifications``
 - ``Spezi/unregisterRemoteNotifications``
-

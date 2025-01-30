@@ -10,12 +10,9 @@ import XCTest
 
 
 final class ModelTests: XCTestCase {
-    @MainActor
     func testModelPropertyWrapper() throws {
         let app = XCUIApplication()
         app.launch()
-
-        XCTAssertTrue(app.wait(for: .runningForeground, timeout: 2.0))
 
         app.buttons["Model"].tap()
 

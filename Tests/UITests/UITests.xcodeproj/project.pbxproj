@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,8 +12,6 @@
 		2F5FA4D029E0A4050047A644 /* XCTestApp in Frameworks */ = {isa = PBXBuildFile; productRef = 2F5FA4CF29E0A4050047A644 /* XCTestApp */; };
 		2F5FA4D229E0B38C0047A644 /* XCTSpezi in Frameworks */ = {isa = PBXBuildFile; productRef = 2F5FA4D129E0B38C0047A644 /* XCTSpezi */; };
 		2F6D139A28F5F386007C25D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F6D139928F5F386007C25D6 /* Assets.xcassets */; };
-		2F79AE292C7563C1005282F4 /* NotificationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F79AE262C7563C1005282F4 /* NotificationModule.swift */; };
-		2F79AE2A2C7563C1005282F4 /* RemoteNotificationsTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F79AE272C7563C1005282F4 /* RemoteNotificationsTestView.swift */; };
 		2F9F07F129090B0500CDC598 /* TestAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9F07F029090B0500CDC598 /* TestAppDelegate.swift */; };
 		2F9F07F529090BA900CDC598 /* ViewModifierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9F07F429090BA900CDC598 /* ViewModifierTests.swift */; };
 		2FA7382C290ADFAA007ACEB9 /* TestApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA7382B290ADFAA007ACEB9 /* TestApp.swift */; };
@@ -22,7 +20,6 @@
 		2FFDAD092A4AAEF400488F42 /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFDAD082A4AAEF400488F42 /* FeatureFlags.swift */; };
 		2FFDAD0B2A4AAF3700488F42 /* LifecycleHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFDAD0A2A4AAF3600488F42 /* LifecycleHandlerTests.swift */; };
 		2FFDAD0D2A4AB0CE00488F42 /* XCTestExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2FFDAD0C2A4AB0CE00488F42 /* XCTestExtensions */; };
-		A9AD5FF92C74860E00F3FBA8 /* RemoteNotificationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AD5FF82C74860A00F3FBA8 /* RemoteNotificationsTests.swift */; };
 		A9F2ECD42AF0B85C0057C7DD /* ModuleWithModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F2ECD32AF0B85C0057C7DD /* ModuleWithModifier.swift */; };
 		A9F2ECD62AF0BA500057C7DD /* ViewModifierTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F2ECD52AF0BA500057C7DD /* ViewModifierTestView.swift */; };
 		A9F2ECD92AF198510057C7DD /* ModuleWithModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F2ECD82AF198510057C7DD /* ModuleWithModel.swift */; };
@@ -46,8 +43,6 @@
 		2F6D139228F5F384007C25D6 /* TestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F6D139928F5F386007C25D6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F6D13AC28F5F386007C25D6 /* TestAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2F79AE262C7563C1005282F4 /* NotificationModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationModule.swift; sourceTree = "<group>"; };
-		2F79AE272C7563C1005282F4 /* RemoteNotificationsTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteNotificationsTestView.swift; sourceTree = "<group>"; };
 		2F7B6CB4294C03C800FDC494 /* TestApp.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = TestApp.xctestplan; path = UITests.xcodeproj/TestApp.xctestplan; sourceTree = "<group>"; };
 		2F9F07F029090B0500CDC598 /* TestAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAppDelegate.swift; sourceTree = "<group>"; };
 		2F9F07F429090BA900CDC598 /* ViewModifierTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModifierTests.swift; sourceTree = "<group>"; };
@@ -58,8 +53,6 @@
 		2FFDAD062A4AAA2E00488F42 /* LifecycleHandlerTestModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifecycleHandlerTestModule.swift; sourceTree = "<group>"; };
 		2FFDAD082A4AAEF400488F42 /* FeatureFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlags.swift; sourceTree = "<group>"; };
 		2FFDAD0A2A4AAF3600488F42 /* LifecycleHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifecycleHandlerTests.swift; sourceTree = "<group>"; };
-		A9AD5FF12C74827600F3FBA8 /* TestApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TestApp.entitlements; sourceTree = "<group>"; };
-		A9AD5FF82C74860A00F3FBA8 /* RemoteNotificationsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteNotificationsTests.swift; sourceTree = "<group>"; };
 		A9F2ECD32AF0B85C0057C7DD /* ModuleWithModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleWithModifier.swift; sourceTree = "<group>"; };
 		A9F2ECD52AF0BA500057C7DD /* ViewModifierTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifierTestView.swift; sourceTree = "<group>"; };
 		A9F2ECD82AF198510057C7DD /* ModuleWithModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleWithModel.swift; sourceTree = "<group>"; };
@@ -113,16 +106,14 @@
 		2F6D139428F5F384007C25D6 /* TestApp */ = {
 			isa = PBXGroup;
 			children = (
-				2F6D139928F5F386007C25D6 /* Assets.xcassets */,
-				2F01E8CE291493560089C46B /* Info.plist */,
+				2FA7382B290ADFAA007ACEB9 /* TestApp.swift */,
+				2F5FA4CD29E0A3BA0047A644 /* SpeziTests.swift */,
 				2FFDAD032A4AA99800488F42 /* LifecycleHandler */,
 				A9F2ECD72AF198330057C7DD /* ModelTests */,
-				2F79AE282C7563C1005282F4 /* RemoteNotifications */,
 				2F9F07ED29090AF500CDC598 /* Shared */,
 				A9F2ECD22AF0B8460057C7DD /* ViewModifierTests */,
-				2F5FA4CD29E0A3BA0047A644 /* SpeziTests.swift */,
-				A9AD5FF12C74827600F3FBA8 /* TestApp.entitlements */,
-				2FA7382B290ADFAA007ACEB9 /* TestApp.swift */,
+				2F6D139928F5F386007C25D6 /* Assets.xcassets */,
+				2F01E8CE291493560089C46B /* Info.plist */,
 			);
 			path = TestApp;
 			sourceTree = "<group>";
@@ -131,10 +122,9 @@
 			isa = PBXGroup;
 			children = (
 				2FB926E42974B0FC008E7B03 /* Info.plist */,
+				2F9F07F429090BA900CDC598 /* ViewModifierTests.swift */,
 				2FFDAD0A2A4AAF3600488F42 /* LifecycleHandlerTests.swift */,
 				A9F2ECDC2AF198690057C7DD /* ModelTests.swift */,
-				A9AD5FF82C74860A00F3FBA8 /* RemoteNotificationsTests.swift */,
-				2F9F07F429090BA900CDC598 /* ViewModifierTests.swift */,
 			);
 			path = TestAppUITests;
 			sourceTree = "<group>";
@@ -144,15 +134,6 @@
 			children = (
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		2F79AE282C7563C1005282F4 /* RemoteNotifications */ = {
-			isa = PBXGroup;
-			children = (
-				2F79AE262C7563C1005282F4 /* NotificationModule.swift */,
-				2F79AE272C7563C1005282F4 /* RemoteNotificationsTestView.swift */,
-			);
-			path = RemoteNotifications;
 			sourceTree = "<group>";
 		};
 		2F9F07ED29090AF500CDC598 /* Shared */ = {
@@ -201,6 +182,7 @@
 				2F6D138E28F5F384007C25D6 /* Sources */,
 				2F6D138F28F5F384007C25D6 /* Frameworks */,
 				2F6D139028F5F384007C25D6 /* Resources */,
+				2FB4E4A429AC746E00C771C8 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -245,7 +227,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1410;
-				LastUpgradeCheck = 1600;
+				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					2F6D139128F5F384007C25D6 = {
 						CreatedOnToolsVersion = 14.1;
@@ -257,6 +239,7 @@
 				};
 			};
 			buildConfigurationList = 2F6D138D28F5F384007C25D6 /* Build configuration list for PBXProject "UITests" */;
+			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -267,7 +250,6 @@
 			packageReferences = (
 				2F746D9D29962B2A00BF54FE /* XCRemoteSwiftPackageReference "XCTestExtensions" */,
 			);
-			preferredProjectObjectVersion = 77;
 			productRefGroup = 2F6D139328F5F384007C25D6 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -296,6 +278,27 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2FB4E4A429AC746E00C771C8 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint > /dev/null; then\n  cd ../../ && swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		2F6D138E28F5F384007C25D6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -307,8 +310,6 @@
 				A9F2ECD62AF0BA500057C7DD /* ViewModifierTestView.swift in Sources */,
 				2F9F07F129090B0500CDC598 /* TestAppDelegate.swift in Sources */,
 				2FFDAD072A4AAA2E00488F42 /* LifecycleHandlerTestModule.swift in Sources */,
-				2F79AE292C7563C1005282F4 /* NotificationModule.swift in Sources */,
-				2F79AE2A2C7563C1005282F4 /* RemoteNotificationsTestView.swift in Sources */,
 				A9F2ECDB2AF198590057C7DD /* ModelTestView.swift in Sources */,
 				A9F2ECD42AF0B85C0057C7DD /* ModuleWithModifier.swift in Sources */,
 				2FFDAD052A4AA9D300488F42 /* LifecycleHandlerTestsView.swift in Sources */,
@@ -322,7 +323,6 @@
 			files = (
 				A9F2ECDD2AF198690057C7DD /* ModelTests.swift in Sources */,
 				2FFDAD0B2A4AAF3700488F42 /* LifecycleHandlerTests.swift in Sources */,
-				A9AD5FF92C74860E00F3FBA8 /* RemoteNotificationsTests.swift in Sources */,
 				2F9F07F529090BA900CDC598 /* ViewModifierTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -376,7 +376,6 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_TESTING_SEARCH_PATHS = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -399,8 +398,6 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_VERSION = 6.0;
 				TVOS_DEPLOYMENT_TARGET = 17.0;
 				XROS_DEPLOYMENT_TARGET = 1.0;
 			};
@@ -444,7 +441,6 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTING_SEARCH_PATHS = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -460,8 +456,6 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_VERSION = 6.0;
 				TVOS_DEPLOYMENT_TARGET = 17.0;
 				VALIDATE_PRODUCT = YES;
 				XROS_DEPLOYMENT_TARGET = 1.0;
@@ -473,7 +467,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = TestApp/TestApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
@@ -510,7 +503,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = TestApp/TestApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
@@ -545,6 +537,7 @@
 		2F6D13BD28F5F386007C25D6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 637867499T;
@@ -569,6 +562,7 @@
 		2F6D13BE28F5F386007C25D6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 637867499T;
@@ -627,8 +621,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/StanfordSpezi/XCTestExtensions";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.4.9;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

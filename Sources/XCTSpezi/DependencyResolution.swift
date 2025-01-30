@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 
-@_spi(Spezi) @_spi(Internal) import Spezi
-import SwiftUI
+@testable import Spezi
+@_implementationOnly import SwiftUI
 
 
 /// Configure and resolve the dependency tree for a collection of [`Module`](https://swiftpackageindex.com/stanfordspezi/spezi/documentation/spezi/module)s.
@@ -18,7 +18,6 @@ import SwiftUI
 ///   - standard: The Spezi [`Standard`](https://swiftpackageindex.com/stanfordspezi/spezi/documentation/spezi/standard) to initialize.
 ///   - simulateLifecycle: Options to simulate behavior for [`LifecycleHandler`](https://swiftpackageindex.com/stanfordspezi/spezi/documentation/spezi/lifecyclehandler)s.
 ///   - modules: The collection of Modules that are configured.
-@MainActor
 public func withDependencyResolution<S: Standard>(
     standard: S,
     simulateLifecycle: LifecycleSimulationOptions = .disabled,
@@ -34,8 +33,7 @@ public func withDependencyResolution<S: Standard>(
 #if os(iOS) || os(visionOS) || os(tvOS)
     if case let .launchWithOptions(options) = simulateLifecycle {
         // maintain backwards compatibility
-        (spezi as DeprecatedLaunchOptionsCall)
-            .callWillFinishLaunching(UIApplication.shared, launchOptions: options)
+        spezi.lifecycleHandler.willFinishLaunchingWithOptions(UIApplication.shared, launchOptions: options)
     }
 #endif
 }
@@ -47,7 +45,6 @@ public func withDependencyResolution<S: Standard>(
 /// - Parameters:
 ///   - simulateLifecycle: Options to simulate behavior for [`LifecycleHandler`](https://swiftpackageindex.com/stanfordspezi/spezi/documentation/spezi/lifecyclehandler)s.
 ///   - modules: The collection of Modules that are configured.
-@MainActor
 public func withDependencyResolution(
     simulateLifecycle: LifecycleSimulationOptions = .disabled,
     @ModuleBuilder _ modules: () -> ModuleCollection

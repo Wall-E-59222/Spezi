@@ -11,19 +11,7 @@ import SwiftUI
 import XCTRuntimeAssertions
 
 
-#if os(iOS) || os(visionOS) || os(tvOS)
-/// Protocol used to silence deprecation warnings.
-@_spi(Internal)
-public protocol DeprecatedLaunchOptionsCall {
-    /// Forward to legacy lifecycle handlers.
-    @MainActor
-    func callWillFinishLaunching(_ application: UIApplication, launchOptions: [UIApplication.LaunchOptionsKey: Any])
-}
-#endif
-
-
 /// Options to simulate behavior for a ``LifecycleHandler`` in cases where there is no app delegate like in Preview setups.
-@MainActor
 public enum LifecycleSimulationOptions {
     /// Simulation is disabled.
     case disabled
@@ -42,17 +30,6 @@ public enum LifecycleSimulationOptions {
 }
 
 
-#if os(iOS) || os(visionOS) || os(tvOS)
-@_spi(Internal)
-extension Spezi: DeprecatedLaunchOptionsCall {
-    @available(*, deprecated, message: "Propagate deprecation warning.")
-    public func callWillFinishLaunching(_ application: UIApplication, launchOptions: [UIApplication.LaunchOptionsKey: Any]) {
-        lifecycleHandler.willFinishLaunchingWithOptions(application, launchOptions: launchOptions)
-    }
-}
-#endif
-
-
 extension View {
     /// Configure Spezi for your previews using a Standard and a collection of Modules.
     ///
@@ -67,7 +44,6 @@ extension View {
     ///   - simulateLifecycle: Options to simulate behavior for ``LifecycleHandler``s. Disabled by default.
     ///   - modules: The ``Module``s used in the Spezi project.
     /// - Returns: The configured view using the Spezi framework.
-    @MainActor
     public func previewWith<S: Standard>(
         standard: S,
         simulateLifecycle: LifecycleSimulationOptions = .disabled,
@@ -84,13 +60,13 @@ extension View {
         }
 
         let spezi = Spezi(standard: standard, modules: modules().elements, storage: storage)
+        let lifecycleHandlers = spezi.lifecycleHandler
 
         return modifier(SpeziViewModifier(spezi))
 #if os(iOS) || os(visionOS) || os(tvOS)
             .task { @MainActor in
                 if case let .launchWithOptions(options) = simulateLifecycle {
-                    (spezi as DeprecatedLaunchOptionsCall)
-                        .callWillFinishLaunching(UIApplication.shared, launchOptions: options)
+                    lifecycleHandlers.willFinishLaunchingWithOptions(UIApplication.shared, launchOptions: options)
                 }
             }
 #endif
@@ -108,7 +84,6 @@ extension View {
     ///   - simulateLifecycle: Options to simulate behavior for ``LifecycleHandler``s. Disabled by default.
     ///   - modules: The ``Module``s used in the Spezi project.
     /// - Returns: The configured view using the Spezi framework.
-    @MainActor
     public func previewWith(
         simulateLifecycle: LifecycleSimulationOptions = .disabled,
         @ModuleBuilder _ modules: () -> ModuleCollection

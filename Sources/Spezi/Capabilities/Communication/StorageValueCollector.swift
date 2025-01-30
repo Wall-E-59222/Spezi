@@ -13,10 +13,9 @@ import SpeziFoundation
 /// data provided by other ``Module``s.
 ///
 /// Data requested through a Storage Value Collector might be provided through a ``_StorageValueProvider``.
-protocol StorageValueCollector: SpeziPropertyWrapper {
+protocol StorageValueCollector {
     /// This method is called to retrieve all the requested values from the given ``SpeziStorage`` repository.
     /// - Parameter repository: Provides access to the ``SpeziStorage`` repository for read access.
-    @MainActor
     func retrieve<Repository: SharedRepository<SpeziAnchor>>(from repository: Repository)
 }
 
@@ -26,7 +25,6 @@ extension Module {
         retrieveProperties(ofType: StorageValueCollector.self)
     }
 
-    @MainActor
     func injectModuleValues<Repository: SharedRepository<SpeziAnchor>>(from repository: Repository) {
         for collector in storageValueCollectors {
             collector.retrieve(from: repository)

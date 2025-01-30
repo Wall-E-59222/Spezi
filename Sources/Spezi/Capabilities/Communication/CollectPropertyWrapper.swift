@@ -38,19 +38,6 @@ public class _CollectPropertyWrapper<Value> {
 }
 
 
-extension _CollectPropertyWrapper: StorageValueCollector {
-    public func retrieve<Repository: SharedRepository<SpeziAnchor>>(from repository: Repository) {
-        injectedValues = repository[CollectedModuleValues<Value>.self].reduce(into: []) { partialResult, entry in
-            partialResult.append(contentsOf: entry.value)
-        }
-    }
-
-    func clear() {
-        injectedValues = nil
-    }
-}
-
-
 extension Module {
     /// The `@Collect` property wrapper can be used to retrieve data communicated by other `Module`s.
     ///
@@ -75,4 +62,11 @@ extension Module {
     /// }
     /// ```
     public typealias Collect = _CollectPropertyWrapper
+}
+
+
+extension _CollectPropertyWrapper: StorageValueCollector {
+    public func retrieve<Repository: SharedRepository<SpeziAnchor>>(from repository: Repository) {
+        injectedValues = repository[CollectedModuleValue<Value>.self] ?? []
+    }
 }

@@ -13,7 +13,6 @@ import XCTRuntimeAssertions
 
 
 final class ViewModifierTests: XCTestCase {
-    @MainActor
     func testViewModifierRetrieval() throws {
         let expectation = XCTestExpectation(description: "Module")
         expectation.assertForOverFulfill = true
@@ -29,8 +28,7 @@ final class ViewModifierTests: XCTestCase {
             .joined(separator: " ")
         XCTAssertEqual(message, "Hello World")
     }
-
-    @MainActor
+    
     func testEmptyRetrieval() {
         let speziAppDelegate = SpeziAppDelegate()
         XCTAssert(speziAppDelegate.spezi.viewModifiers.isEmpty)
