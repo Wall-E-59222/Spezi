@@ -26,8 +26,8 @@ let package = Package(
         .library(name: "XCTSpezi", targets: ["XCTSpezi"])
     ],
     dependencies: [
-        .package(url: "https://github.com/StanfordSpezi/SpeziFoundation", from: "1.0.2"),
-        .package(url: "https://github.com/Wall-E-59222/XCTRuntimeAssertions", from: "1.1.1")
+        .package(url: "https://github.com/StanfordSpezi/SpeziFoundation", .upToNextMinor(from: "1.0.2")),
+        .package(url: "https://github.com/Wall-E-59222/XCTRuntimeAssertions", from: "1.1.2")
     ],
     targets: [
         .target(
